@@ -1,0 +1,61 @@
+package com.qa.crm.utils;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebElement;
+
+import com.qa.crm.base.TestBase;
+
+public class FunUtilities extends TestBase{
+	
+	FunUtilities(){
+		super();
+	}
+	
+	public static String getTitle(){
+		return driver.getTitle();
+		
+	}
+	
+	public static List<String> getLink(List<WebElement> obtainedList){
+		List<String> links = new ArrayList<String>();
+		
+		for(WebElement link : obtainedList) {
+			links.add(link.getText());
+		}
+		
+		
+		return links;
+		
+	}
+	
+	public static void takescreenshot(WebElement el) {
+		
+	
+		
+		JavascriptExecutor JS = (JavascriptExecutor)driver;
+		JS.executeScript("arguments[0].scrollIntoView", el);
+		TakesScreenshot TS = (TakesScreenshot)driver;
+		File srcFile = TS.getScreenshotAs(OutputType.FILE);
+		
+	
+		File destFile = new File(System.getProperty("USER_DIR")+"//src//test//screenshots"+"123.jpg");
+		try {
+			FileUtils.copyFile(srcFile, destFile);
+		} catch (IOException e) {
+	
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	
